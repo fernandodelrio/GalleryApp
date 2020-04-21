@@ -1,0 +1,23 @@
+digraph result_graph {
+  "//App:GalleryBin" [style=filled,color="#86B3AF"];
+  "//App:GalleryBin" -> "//App:GalleryLib";
+  "//App:GalleryLib" [style=filled,color="#D6D3F5"];
+  "//App:GalleryLib" -> "//App:SwiftLint";
+  "//App:GalleryLib" -> "//Modules/RootUI:RootUI";
+  "//App:GalleryLib" -> "//Resources:Assets";
+  "//App:GalleryLib" -> "//Resources:LaunchScreen";
+  "//App:SwiftLint" [style=filled,color="#859181"];
+  "//Modules/Core:Core" [style=filled,color="#D6D3F5"];
+  "//Modules/Gallery:Gallery" [style=filled,color="#D6D3F5"];
+  "//Modules/Gallery:Gallery" -> "//Modules/Core:Core";
+  "//Modules/Gallery:Gallery" -> "//Modules/Gallery:GalleryXibs";
+  "//Modules/Gallery:Gallery" -> "//Modules/Network:Network";
+  "//Modules/Gallery:GalleryXibs" [style=filled,color="#D3DDE9"];
+  "//Modules/Network:Network" [style=filled,color="#D6D3F5"];
+  "//Modules/Network:Network" -> "//Modules/Core:Core";
+  "//Modules/RootUI:RootUI" [style=filled,color="#D6D3F5"];
+  "//Modules/RootUI:RootUI" -> "//Modules/Core:Core";
+  "//Modules/RootUI:RootUI" -> "//Modules/Gallery:Gallery";
+  "//Resources:Assets" [style=filled,color="#A58798"];
+  "//Resources:LaunchScreen" [style=filled,color="#D3DDE9"];
+}

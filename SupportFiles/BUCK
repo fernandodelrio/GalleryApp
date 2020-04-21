@@ -1,0 +1,10 @@
+# This file can be depended upon for any apple_test_lib rules.
+genrule(
+    name = "TestInfoPlist",
+    visibility = ["PUBLIC"],
+    srcs = [
+        "TestInfo.plist",
+    ],
+    out = 'TestInfo.plist',
+    cmd = 'cp $SRCDIR/TestInfo.plist $OUT',
+)

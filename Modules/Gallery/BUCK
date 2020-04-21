@@ -1,0 +1,17 @@
+load("//SupportFiles:buck_rule_macros.bzl", "first_party_library")
+
+first_party_library(
+    name = "Gallery",
+    deps = [
+        "//Modules/Network:Network",
+        "//Modules/Core:Core",
+        ":GalleryXibs"
+    ]
+)
+
+apple_resource(
+    name = "GalleryXibs",
+    files = glob([
+        "**/*.xib"
+    ]),
+)

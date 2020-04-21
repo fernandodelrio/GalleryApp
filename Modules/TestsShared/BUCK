@@ -1,0 +1,21 @@
+load("//SupportFiles:configs.bzl", "app_binary_configs", "library_configs", "watch_binary_configs", "message_binary_configs", "pretty", "info_plist_substitutions", "bundle_identifier", "DEVELOPMENT_LANGUAGE")
+load("//SupportFiles:buck_rule_macros.bzl", "apple_lib", "apple_test_lib", "apple_test_all", "root_buck")
+
+apple_library(
+    name = "TestsShared",
+    srcs = glob([
+        "Sources/**/*.swift"
+    ]),
+    configs = library_configs(),
+    swift_version = "5",
+    visibility = ["PUBLIC"],
+    frameworks = [
+        "$PLATFORM_DIR/Developer/Library/Frameworks/XCTest.framework"
+    ],
+    deps = [
+        "//Modules/Core:Core",
+        "//Modules/RootUI:RootUI",
+        "//Modules/Gallery:Gallery",
+        "//Modules/Network:Network",
+    ]
+)

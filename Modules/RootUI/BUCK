@@ -1,0 +1,9 @@
+load("//SupportFiles:buck_rule_macros.bzl", "first_party_library")
+
+first_party_library(
+    name = "RootUI",
+    deps = [
+        "//Modules/Gallery:Gallery",
+        "//Modules/Core:Core"
+    ]
+)

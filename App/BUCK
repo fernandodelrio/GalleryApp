@@ -1,0 +1,80 @@
+load("//SupportFiles:configs.bzl", "app_binary_configs", "library_configs", "watch_binary_configs", "message_binary_configs", "pretty", "info_plist_substitutions", "bundle_identifier", "DEVELOPMENT_LANGUAGE")
+load("//SupportFiles:buck_rule_macros.bzl", "apple_lib", "apple_test_lib", "apple_test_all", "root_buck")
+
+xcode_prebuild_script(
+    name = "SwiftLint",
+    cmd = '"' + root_buck() + '/Tools/swiftlint" --path "' + root_buck() + '"',
+    inputs = [],
+    outputs = [],
+    input_file_lists = [],
+    output_file_lists = [],
+    visibility = ["PUBLIC"]
+)
+
+apple_library(
+    name = "GalleryLib",
+    visibility = ["PUBLIC"],
+    configs = library_configs(),
+    swift_version = "5",
+    srcs = [
+        "SupportFiles/Dummy.swift"
+    ],
+    deps = [
+        "//Resources:Assets",
+        "//Resources:LaunchScreen",
+        ":SwiftLint",
+        "//Modules/RootUI:RootUI"
+    ]
+)
+
+apple_binary(
+    name = "GalleryBin",
+    visibility = ["PUBLIC"],
+    configs = app_binary_configs("GalleryApp"),
+    swift_version = "5",
+    srcs = [
+      "SupportFiles/Dummy.swift"
+    ],
+    deps = [
+        ":GalleryLib"
+    ]
+)
+
+apple_bundle(
+    name = "GalleryApp",
+    visibility = ["PUBLIC"],
+    extension = "app",
+    binary = ":GalleryBin",
+    product_name = "GalleryApp",
+    info_plist = "Info.plist",
+    info_plist_substitutions = info_plist_substitutions("GalleryApp"),
+)
+
+apple_package(
+    name = "GalleryAppPackage",
+    bundle = ":GalleryApp",
+)
+
+xcode_workspace_config(
+    name = "GalleryAppWorkspace",
+    workspace_name = "GalleryApp",
+    src_target = ":GalleryApp",
+    additional_scheme_actions = {
+        "Build": {
+            "PRE_SCHEME_ACTIONS": ["echo 'Started'"],
+            "POST_SCHEME_ACTIONS": ["echo 'Finished'"],
+        },
+    },
+    action_config_names = {"profile": "Profile"}
+)
+
+apple_test_all(
+    name = "GalleryAppCITests",
+    libraries = [
+        "//Modules/Core:Core",
+        "//Modules/RootUI:RootUI",
+        "//Modules/Gallery:Gallery",
+        "//Modules/Network:Network",
+    ],
+    test_host_app = "//App:GalleryApp"
+)

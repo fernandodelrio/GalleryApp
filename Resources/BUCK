@@ -1,0 +1,14 @@
+apple_asset_catalog(
+    name = "Assets",
+    visibility = ["PUBLIC"],
+    app_icon = "AppIcon",
+    dirs = ["Assets.xcassets"]
+)
+
+apple_resource(
+    name = "LaunchScreen",
+    visibility = ["PUBLIC"],
+    variants = glob([
+        "*.lproj/*.storyboard",
+    ]),
+)
